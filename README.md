@@ -18,71 +18,72 @@ Constant variable names must be in camel case.
 Class names must be in Pascal case.
 Unused variables must be removed.
 The maximum number of characters on a line is 100. If the number of characters exceeds 100 characters, create a new line with an indent.
+
 Spaces Before parenthesis
 
 Do not add before:
-function declaration
-function call
-function foo() { return 0; }
+	function declaration
+	function call
+	function foo() { return 0; }
 
 Add before:
-if
-for
-while
-switch
-catch
-inner function expression
-if (i > 10) { for (var j = 0; j < 10; j++) { switch (j) { case 0: value = 'zero'; break; case 1: value = 'one'; break; } } }
+	if
+	for
+	while
+	switch
+	catch
+	inner function expression
+	if (i > 10) { for (var j = 0; j < 10; j++) { switch (j) { case 0: value = 'zero'; break; case 1: value = 'one'; break; } } }
 
 Around operators
 
 Add around
-assignment operators (=, +=, ...)
-logical operators (&&, ||)
-equality operators (==, ===, !=, !==)
-relational operators (<, >, <=, <=)
-bitwise operators (&, |, ^, ...)
-additive operators (+, -) and multiplication operators (*, /, %)
-shift operators (<<, >>, >>>, ...)
-var a = 0, b = (i == j || j > 5), c = (j << 2) & 4, d += 1, e = a + d;
+	assignment operators (=, +=, ...)
+	logical operators (&&, ||)
+	equality operators (==, ===, !=, !==)
+	relational operators (<, >, <=, <=)
+	bitwise operators (&, |, ^, ...)
+	additive operators (+, -) and multiplication operators (*, /, %)
+	shift operators (<<, >>, >>>, ...)
+	var a = 0, b = (i == j || j > 5), c = (j << 2) & 4, d += 1, e = a + d;
 
 Do not add around:
-unary operators (!, -, +, ++, --)
-j++; bar = !foo;
+	unary operators (!, -, +, ++, --)
+	j++; bar = !foo;
 
 Before left brace
 
 Add before:
-function
-if
-else
-for
-while
-do
-switch
-try
-catch
-finally
-Before keywords
+	function
+	if
+	else
+	for
+	while
+	do
+	switch
+	try
+	catch
+	finally
+	Before keywords
 
 Add before:
-else
-while
-catch
-fanally
-In ternary operators
+	else
+	while
+	catch
+	finally
+	In ternary operators
 
 Add:
-before '?'
-after '?'
-before ':'
-after ':'
-Other
+	before '?'
+	after '?'
+	before ':'
+	after ':'
+	Other
 
 Add
-after comma
-after property name-value separator (:)
-Do not add
-before comma
-before semicolon
-before property name-value separator (:)
+	after comma
+	after property name-value separator (:)
+	Do not add
+	before comma
+	before semicolon
+	before property name-value separator (:)
