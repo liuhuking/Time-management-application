@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.http.post('http://localhost:3000/users/login', this.user).subscribe(data => {
-      
+      this.user.email = data['token'];
     });
   }
 }

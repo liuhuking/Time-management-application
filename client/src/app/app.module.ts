@@ -8,19 +8,16 @@ import { RegisterComponent } from './auth/register/register.component';
 
 
 import { AppComponent } from './app.component';
-<<<<<<< HEAD
 import { TaskComponent } from './task/task.component';
 
 const appRoutes: Routes = [
-{ path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '',
     redirectTo: '/',
     pathMatch: 'full'
   },
   { path: 'task', component: TaskComponent },
-  // { path: 'task-form', component: TaskForm },
-  // { path: 'task-form/:id', component: TaskForm},
   { path: '',
     redirectTo: '/',
     pathMatch: 'full'
@@ -30,7 +27,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    TaskComponent
+    TaskComponent,
     LoginComponent,
     RegisterComponent
   ],
