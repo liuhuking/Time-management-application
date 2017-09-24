@@ -8,6 +8,10 @@
     <a routerLink="/task" routerLinkActive="active" class="nav-link">Tasks</a>
   </li>
 </ul>
+
+<router-outlet></router-outlet>
+=======
 <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
 <a routerLink="/register" routerLinkActive="active" class="nav-link">Register</a>
 <router-outlet></router-outlet>
+>>>>>>> 5608b048a40cd46d076054d372a77f8ef842db7d
