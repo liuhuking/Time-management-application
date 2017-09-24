@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { User } from '../common/user';
 
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   user: User;
   submitted = false;
 
-  constructor() { 
+  constructor(private http: HttpClient) { 
     this.user = new User("", "", "");
   }
 
@@ -21,5 +22,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.http.post('http://localhost:3000/users/login', this.user).subscribe(data => {
+      
+    });
   }
 }
