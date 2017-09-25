@@ -6,13 +6,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 
-
 import { AppComponent } from './app.component';
 import { TaskComponent } from './task/task.component';
+import { ProfileComponent } from './auth/profile/profile.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: '',
     redirectTo: '/',
     pathMatch: 'full'
@@ -29,7 +32,9 @@ const appRoutes: Routes = [
     AppComponent,
     TaskComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

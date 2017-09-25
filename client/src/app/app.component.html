@@ -1,4 +1,41 @@
-<h1>Time Management Application</h1>
-<a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
-<a routerLink="/register" routerLinkActive="active" class="nav-link">Register</a>
-<router-outlet></router-outlet>
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div *ngIf="token; then loggedinBlock; else loggedoutBlock"></div>
+        <ng-template #loggedinBlock>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a routerLink="/logout" routerLinkActive="active" class="nav-link">Log out</a>
+                </li>
+            </ul>
+        </ng-template>
+        <ng-template #loggedoutBlock>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/register" routerLinkActive="active" class="nav-link">Register</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a routerLink="/profile" routerLinkActive="active" class="nav-link">Profile</a>
+                </li> -->
+                <li class="nav-item">
+                </li>
+            </ul>
+        </ng-template>
+
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

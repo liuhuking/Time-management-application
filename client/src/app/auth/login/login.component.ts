@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { User } from '../common/user';
 
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   user: User;
   submitted = false;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private router: Router) {
     this.user = new User("", "", "");
   }
 
@@ -23,7 +24,11 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.http.post('http://localhost:3000/users/login', this.user).subscribe(data => {
-      this.user.email = data['token'];
+      if (data['token']) {
+        localStorage.setItem('mean-token', data['token']);
+        location.reload();
+        this.router.navigate(['/']);
+      }
     });
   }
 }
