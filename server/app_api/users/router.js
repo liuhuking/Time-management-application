@@ -4,6 +4,7 @@ var jwt = require('express-jwt');
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var emailValidator = require('email-validator');
 var auth = jwt({
     secret: 'SECRET',
     userProperty: 'payload'
@@ -24,14 +25,20 @@ function register(req, res) {
 
     user.setPassword(req.body.password);
 
-    user.save(function(err) {
-        var token;
-        token = user.generateJwt();
-        res.status(200);
-        res.json({
-            "token": token
+    if(emailValidator.validate(user.email)){
+        user.save(function(err) {
+            var token;
+            token = user.generateJwt();
+            res.status(200);
+            res.json({
+                "token": token
+            });
         });
-    });
+    } else {
+        res.json({
+            "message": "Invalid value for email field"
+        });
+    }
 };
 
 function login(req, res) {

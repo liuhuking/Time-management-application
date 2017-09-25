@@ -9,10 +9,18 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AppComponent } from './app.component';
 import { TaskComponent } from './task/task.component';
 import { TaskFormComponent } from './task/task-form/task-form.component';
+import { ProfileComponent } from './auth/profile/profile.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'logout', component: LogoutComponent },
+  { path: '',
+    redirectTo: '/',
+    pathMatch: 'full'
+  },
   { path: 'task', component: TaskComponent },
   { path: 'task-form/:id', component: TaskFormComponent },
   { path: '',
@@ -27,7 +35,9 @@ const appRoutes: Routes = [
     TaskComponent,
     LoginComponent,
     RegisterComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    ProfileComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

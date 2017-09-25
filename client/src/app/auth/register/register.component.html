@@ -1,21 +1,24 @@
-<div class="container">
-  <h1>Register</h1>
-  <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" class="form-control" required [(ngModel)]="user.email" name="email"> {{user.email}}
-    </div>
+<h1>
+  Register</h1>
+<form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="message">
+    {{message}}
+  </div>
+  
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" class="form-control" required [(ngModel)]="user.email" name="email">
+  </div>
 
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" id="name" class="form-control" required [(ngModel)]="user.name" name="name"> {{user.name}}
-    </div>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" id="name" class="form-control" required [(ngModel)]="user.name" name="name">
+  </div>
 
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" class="form-control" required [(ngModel)]="user.password" name="password"> {{user.password}}
-    </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" class="form-control" required [(ngModel)]="user.password" name="password">
+  </div>
 
-    <button type="submit" [disabled]="!registerForm.form.valid">Submit</button>
-  </form>
-</div>
+  <button type="submit" [disabled]="!registerForm.form.valid">Submit</button>
+</form>
