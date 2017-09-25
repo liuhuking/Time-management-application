@@ -14,24 +14,38 @@ export class TaskComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.readList();
+  }
+
+  readList() {
     this.http.get('http://localhost:3000/tasks/gettasks')
-      .subscribe(data => {
-        var counter = 0;
-        while (data[counter] != null) {
-          this.taskList.push(new Task(
-              data[counter]["_id"],
-              data[counter]["name"],
-              data[counter]["date"],
-              data[counter]["goal"],
-              data[counter]["deliverable"],
-              data[counter]["priority"],
-              data[counter]["startTime"],
-              data[counter]["endTime"],
-              data[counter]["reminder"],
-              data[counter]["process"]
-          ));
-          counter++;
-        }
-    });
+    .subscribe(data => {
+      var counter = 0;
+      this.taskList = [];
+      while (data[counter] != null) {
+        this.taskList.push(new Task(
+            data[counter]["_id"],
+            data[counter]["name"],
+            data[counter]["date"],
+            data[counter]["goal"],
+            data[counter]["deliverable"],
+            data[counter]["priority"],
+            data[counter]["startTime"],
+            data[counter]["endTime"],
+            data[counter]["reminder"],
+            data[counter]["process"]
+        ));
+        counter++;
+      }
+  });
+  }
+
+  deleteTask(task: Task) {
+    this.http.delete('http://localhost:3000/tasks/remove/' + task._id)
+    .subscribe(
+      success => {
+        this.readList();
+      }
+  );
   }
 }

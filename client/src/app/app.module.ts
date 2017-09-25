@@ -6,18 +6,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 
-
 import { AppComponent } from './app.component';
 import { TaskComponent } from './task/task.component';
+import { TaskFormComponent } from './task/task-form/task-form.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '',
-    redirectTo: '/',
-    pathMatch: 'full'
-  },
   { path: 'task', component: TaskComponent },
+  { path: 'task-form/:id', component: TaskFormComponent },
   { path: '',
     redirectTo: '/',
     pathMatch: 'full'
@@ -29,7 +26,8 @@ const appRoutes: Routes = [
     AppComponent,
     TaskComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TaskFormComponent
   ],
   imports: [
     BrowserModule,
