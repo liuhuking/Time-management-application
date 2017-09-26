@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
+import * as moment from 'moment';
 
 import { Task } from './task';
 
@@ -14,78 +15,92 @@ import { Task } from './task';
 export class TaskFormComponent implements OnInit {
   model: Task;
   option = 'Add';
+  id = this.route.snapshot.paramMap.get('id');
 
   // Refer for Angular lifecycle: https://angular.io/guide/lifecycle-hooks
   // Initialize model with values
   constructor(
       private route: ActivatedRoute,
       private http: HttpClient,
-      private location: Location
+      private location: Location,
+      private router: Router
   ) {
-      this.model = new Task("","", new Date(), "", "", 1, new Date(), new Date(), "", []);
+      this.model = new Task("","", "", "", "", 1, "", "", "", []);
   }
 
   // Makes get request to the server and populate tasks
-  ngOnInit(): void {
-      const id = this.route.snapshot.paramMap.get('id');
-    //   if (id) {
-    //     this.http.get('http://localhost:3000/tasks/gettask/:' + id)
-    //     .subscribe(data => {
-    //       var counter = 0;
-    //       this.taskList = [];
-    //       while (data[counter] != null) {
-    //         this.taskList.push(new Task(
-    //             data[counter]["_id"],
-    //             data[counter]["name"],
-    //             data[counter]["date"],
-    //             data[counter]["goal"],
-    //             data[counter]["deliverable"],
-    //             data[counter]["priority"],
-    //             data[counter]["startTime"],
-    //             data[counter]["endTime"],
-    //             data[counter]["reminder"],
-    //             data[counter]["process"]
-    //         ));
-    //         counter++;
-    //       }
+ngOnInit(): void {
+    if (this.id !== '0') {
+        this.http.get('http://localhost:3000/tasks/gettask/' + this.id)
+        .subscribe(data => {
+            let counter = 0;
 
-    //       if (counter !== 0) {
-    //         this.option = 'Edit';
-    //       }
-    //   });
-    //   }
-    //   const id = this.route.snapshot.paramMap.get('id');
+            if (data != null) {
+                this.model = new Task(
+                    data["_id"],
+                    data["name"],
+                    moment(data["date"]).format('DD/MM/YYYY'),
+                    data["goal"],
+                    data["deliverable"],
+                    data["priority"],
+                    moment(data["startTime"]).format('H:mm'),
+                    moment(data["endTime"]).format('H:mm'),
+                    data["reminder"],
+                    data["process"]
+                );
+                counter++;
+            }
 
-    //   if (id) {
-    //       this.option = 'Edit';
-        //   this.http.get('http://localhost:3000/api/task/edit/' + id).subscribe(data => {
-        //       this.model = new Task(data[0]['taskId'],
-        //           data[0]['name'],
-        //           data[0]['date'],
-        //           data[0]['goal'],
-        //           data[0]['deliverable'],
-        //           data[0]['priority'],
-        //           data[0]['startTime'],
-        //           data[0]['endTime'],
-        //           data[0]['reminder'],
-        //           data[0]['process']
-        //       )
-        //   });
-    //   }
-  }
+            if (counter !== 0) {
+                this.option = 'Edit';
+            }
+        });
+    }
+}
 
   // Process submitted form
   onSubmit() {
-      this.http.post('http://localhost:3000/tasks/add', {
-          "name": this.model.name,
-          "date": this.model.date,
-          "goal": this.model.goal,
-          "deliverable": this.model.deliverable,
-          "priority": this.model.priority,
-          "startTime": this.model.startTime,
-          "endTime": this.model.endTime,
-          "reminder": this.model.reminder,
-          "process": this.model.process
-      }).subscribe(data => { });
+      
+    if (this.id !== '0') {
+        this.http.put('http://localhost:3000/tasks/edit', {
+            "_id": this.id,
+            "name": this.model.name,
+            "date": this.model.date,
+            "goal": this.model.goal,
+            "deliverable": this.model.deliverable,
+            "priority": this.model.priority,
+            "startTime": this.model.startTime,
+            "endTime": this.model.endTime,
+            "reminder": this.model.reminder,
+            "process": this.model.process
+        })
+        .subscribe(data => {
+            var counter = 0;
+
+            if (data != null) {
+                this.router.navigate(['task']);
+            }
+        });
+    } else {
+        this.http.post('http://localhost:3000/tasks/add', {
+            "name": this.model.name,
+            "date": this.model.date,
+            "goal": this.model.goal,
+            "deliverable": this.model.deliverable,
+            "priority": this.model.priority,
+            "startTime": this.model.startTime,
+            "endTime": this.model.endTime,
+            "reminder": this.model.reminder,
+            "process": this.model.process
+        })
+        .subscribe(data => { this.router.navigate(['task']); });
+    }
+
+
+
+
+
+
+      
   }
 }

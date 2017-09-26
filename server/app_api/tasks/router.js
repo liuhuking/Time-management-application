@@ -82,7 +82,20 @@ function edit(req, res) {
     var updateDoc = req.body;
     var id = new ObjectID(req.body._id);
     delete updateDoc._id;
-  
+
+    var dateString = moment(updateDoc.date, 'DD/MM/YYYY');
+    var formattedDate = dateString.format('YYYY/MM/DD');
+    updateDoc.date = formattedDate;
+
+    var timeString, formattedTime;
+    timeString = moment(updateDoc.startTime, 'H:mm');
+    formattedTime = timeString.format('YYYY/MM/DD H:mm');
+    updateDoc.startTime = formattedTime;
+
+    timeString = moment(updateDoc.endTime, 'H:mm');
+    formattedTime = timeString.format('YYYY/MM/DD H:mm');
+    updateDoc.endTime = formattedTime;
+
     Task.updateOne({_id: id}, updateDoc, function(err, doc) {
       if (err) {
         handleError(res, err.message, "Failed to update contact");
