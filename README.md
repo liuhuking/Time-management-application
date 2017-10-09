@@ -113,3 +113,9 @@ Design Standard
 
 Other Development Standards
 - Commit when the feature is fully implemented and working correctly
+
+
+Reference:
+Angular framework : https://angular.io/
+
+Background DataBase: https://www.mongodb.com/
