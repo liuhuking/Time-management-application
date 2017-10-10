@@ -3,8 +3,9 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Task } from './task';
+import { Task } from '../common/task';
 
 @Component({
   selector: 'app-task-form',
@@ -25,7 +26,7 @@ export class TaskFormComponent implements OnInit {
       private location: Location,
       private router: Router
   ) {
-      this.model = new Task("","", "", "", "", 1, "", "", "", []);
+      this.model = new Task('', '', '', '', '', '', '', [], '');
   }
 
   // Makes get request to the server and populate tasks
@@ -37,16 +38,15 @@ ngOnInit(): void {
 
             if (data != null) {
                 this.model = new Task(
-                    data["_id"],
-                    data["name"],
-                    moment(data["date"]).format('DD/MM/YYYY'),
-                    data["goal"],
-                    data["deliverable"],
-                    data["priority"],
-                    moment(data["startTime"]).format('H:mm'),
-                    moment(data["endTime"]).format('H:mm'),
-                    data["reminder"],
-                    data["process"]
+                    data['_id'],
+                    data['name'],
+                    moment(data['date']).format('DD/MM/YYYY'),
+                    data['goal'],
+                    data['deliverable'].join('\n'),
+                    moment(data['startTime']).format('H:mm'),
+                    moment(data['endTime']).format('H:mm'),
+                    data['process'].join('\n'),
+                    data['userId'],
                 );
                 counter++;
             }
@@ -58,49 +58,40 @@ ngOnInit(): void {
     }
 }
 
+readTextArea (deliverable, process) {
+    this.model.deliverable = deliverable.split('\n');
+    this.model.process = process.split('\n');
+}
+
   // Process submitted form
   onSubmit() {
-      
     if (this.id !== '0') {
         this.http.put('http://localhost:3000/tasks/edit', {
-            "_id": this.id,
-            "name": this.model.name,
-            "date": this.model.date,
-            "goal": this.model.goal,
-            "deliverable": this.model.deliverable,
-            "priority": this.model.priority,
-            "startTime": this.model.startTime,
-            "endTime": this.model.endTime,
-            "reminder": this.model.reminder,
-            "process": this.model.process
+            '_id': this.id,
+            'name': this.model.name,
+            'date': this.model.date,
+            'goal': this.model.goal,
+            'deliverable': this.model.deliverable,
+            'startTime': this.model.startTime,
+            'endTime': this.model.endTime,
+            'process': this.model.process
         })
         .subscribe(data => {
-            var counter = 0;
-
             if (data != null) {
                 this.router.navigate(['task']);
             }
         });
     } else {
         this.http.post('http://localhost:3000/tasks/add', {
-            "name": this.model.name,
-            "date": this.model.date,
-            "goal": this.model.goal,
-            "deliverable": this.model.deliverable,
-            "priority": this.model.priority,
-            "startTime": this.model.startTime,
-            "endTime": this.model.endTime,
-            "reminder": this.model.reminder,
-            "process": this.model.process
+            'name': this.model.name,
+            'date': this.model.date,
+            'goal': this.model.goal,
+            'deliverable': this.model.deliverable,
+            'startTime': this.model.startTime,
+            'endTime': this.model.endTime,
+            'process': this.model.process
         })
         .subscribe(data => { this.router.navigate(['task']); });
     }
-
-
-
-
-
-
-      
   }
 }

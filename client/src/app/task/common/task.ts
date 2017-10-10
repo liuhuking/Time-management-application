@@ -5,10 +5,9 @@ export class Task {
         public date: string,
         public goal: string,
         public deliverable: string,
-        public priority: number,
         public startTime: string,
         public endTime: string,
-        public reminder: string,
-        public process: string[]
+        public process: string[],
+        public userId: string
     ) { }
 }

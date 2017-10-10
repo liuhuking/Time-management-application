@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Task } from './task';
+import { Task } from '../common/task';
 
 @Component({
   selector: 'app-task',
@@ -20,20 +20,19 @@ export class TaskComponent implements OnInit {
   readList() {
     this.http.get('http://localhost:3000/tasks/gettasks')
     .subscribe(data => {
-      var counter = 0;
+      let counter = 0;
       this.taskList = [];
       while (data[counter] != null) {
         this.taskList.push(new Task(
-            data[counter]["_id"],
-            data[counter]["name"],
-            data[counter]["date"],
-            data[counter]["goal"],
-            data[counter]["deliverable"],
-            data[counter]["priority"],
-            data[counter]["startTime"],
-            data[counter]["endTime"],
-            data[counter]["reminder"],
-            data[counter]["process"]
+            data[counter]['_id'],
+            data[counter]['name'],
+            data[counter]['date'],
+            data[counter]['goal'],
+            data[counter]['deliverable'],
+            data[counter]['startTime'],
+            data[counter]['endTime'],
+            data[counter]['process'],
+            data[counter]['userId']
         ));
         counter++;
       }

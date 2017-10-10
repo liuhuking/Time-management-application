@@ -14,9 +14,11 @@ require('./config');
 require('./app_api/users/model');
 require('./app_api/users/passport');
 require('./app_api/tasks/model');
+require('./app_api/projects/model');
 
 var routesApi = require('./app_api/users/router');
 var routesTaskApi = require('./app_api/tasks/router');
+var routesProjectApi = require('./app_api/projects/router');
 
 var app = express();
 
@@ -38,6 +40,7 @@ app.use(passport.initialize());
 app.use('/', index);
 app.use('/users', routesApi);
 app.use('/tasks', routesTaskApi);
+app.use('/projects', routesProjectApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

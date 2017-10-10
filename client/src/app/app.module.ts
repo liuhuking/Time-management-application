@@ -7,10 +7,12 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 
 import { AppComponent } from './app.component';
-import { TaskComponent } from './task/task.component';
+import { TaskComponent } from './task/task-list/task.component';
 import { TaskFormComponent } from './task/task-form/task-form.component';
 import { ProfileComponent } from './auth/profile/profile.component';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { ListComponent } from './project/list/list.component';
+import { FormComponent } from './project/form/form.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -37,7 +39,9 @@ const appRoutes: Routes = [
     RegisterComponent,
     TaskFormComponent,
     ProfileComponent,
-    LogoutComponent
+    LogoutComponent,
+    ListComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,

@@ -13,12 +13,7 @@ var taskSchema = new mongoose.Schema({
         type: String
     },
     deliverable: {
-        type: String
-    },
-    priority: {
-        type: Number,
-        required: true,
-        default: 1
+        type: [String]
     },
     startTime: {
         type: Date
@@ -26,26 +21,16 @@ var taskSchema = new mongoose.Schema({
     endTime: {
         type: Date
     },
-    reminder: {
-        type: String
-    },
     process: {
         type: [String]
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
-    // ,
-    // projectId: {
-    //     type: Schema.Types.ObjectId
-    // },
-    // userId: {
-    //     type: Schema.Types.ObjectId,
-    //     required: true
-    // }
 },
 {
     timestamps: true
 });
-
-taskSchema.methods.setPassword = function(password) {
-};
 
 mongoose.model('Task', taskSchema);

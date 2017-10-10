@@ -7,10 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  token : String;
+  token: String;
 
-  constructor(){
-    if(localStorage.getItem('mean-token')){
+  constructor() {
+    if (localStorage.getItem('mean-token')) {
       this.token = localStorage.getItem('mean-token');
     }
   }

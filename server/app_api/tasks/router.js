@@ -7,6 +7,7 @@ var ObjectID = mongodb.ObjectID;
 var Task = mongoose.model('Task');
 
 router.get('/gettasks', getAll);
+router.get('/gettasksfrom/:id', getAllFrom);
 router.get('/gettask/:id', getSelected)
 router.post('/add', add);
 router.put('/edit', edit);
@@ -28,14 +29,24 @@ function getAll(req, res) {
     // }
 }
 
+function getAllFrom(req, res) {
+    Task.find({
+        userId : new ObjectID(req.params.id)
+    })
+    .populate('userId')
+    .exec(function(err, task){
+        res.status(200).json(task);
+    })
+}
+
 function getSelected(req, res) {
     if(!req.params.id){
         res.status(401).json({
             "message": "Invalid key for searching task"
         });
     } else {
-        Task.findById(new ObjectID(req.params.id)).exec(function(err, user){
-            res.status(200).json(user);
+        Task.findById(new ObjectID(req.params.id)).exec(function(err, task){
+            res.status(200).json(task);
         });
     }
 }
@@ -51,7 +62,6 @@ function add(req, res) {
 
     task.goal = req.body.goal;
     task.deliverable = req.body.deliverable;
-    task.priority = req.body.priority;
 
     //TO-DO: Create a method to parse directly
     var timeString, formattedTime;
@@ -63,7 +73,7 @@ function add(req, res) {
     formattedTime = timeString.format('YYYY/MM/DD H:mm');
 
     task.endTime = formattedTime;
-    task.reminder = req.body.reminder;
+    task.userId = new ObjectID(req.body.userId);
 
     // for(var i = 0; i < req.body.process.length; i++){
     //     task.process.push(req.body.process[i]);
@@ -95,6 +105,8 @@ function edit(req, res) {
     timeString = moment(updateDoc.endTime, 'H:mm');
     formattedTime = timeString.format('YYYY/MM/DD H:mm');
     updateDoc.endTime = formattedTime;
+
+    // updateDoc.userId = new ObjectID(updateDoc.userId);
 
     Task.updateOne({_id: id}, updateDoc, function(err, doc) {
       if (err) {
