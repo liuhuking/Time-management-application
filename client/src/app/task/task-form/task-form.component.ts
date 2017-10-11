@@ -26,7 +26,7 @@ export class TaskFormComponent implements OnInit {
       private location: Location,
       private router: Router
   ) {
-      this.model = new Task('', '', '', '', '', '', '', [], '');
+      this.model = new Task('', '', '', '', [], '', '', [], '');
   }
 
   // Makes get request to the server and populate tasks
@@ -40,7 +40,7 @@ ngOnInit(): void {
                 this.model = new Task(
                     data['_id'],
                     data['name'],
-                    moment(data['date']).format('DD/MM/YYYY'),
+                    moment(data['date']).format('YYYY-MM-DD'),
                     data['goal'],
                     data['deliverable'].join('\n'),
                     moment(data['startTime']).format('H:mm'),
@@ -69,7 +69,7 @@ readTextArea (deliverable, process) {
         this.http.put('http://localhost:3000/tasks/edit', {
             '_id': this.id,
             'name': this.model.name,
-            'date': this.model.date,
+            'date': moment(this.model.date).format('DD-MM-YYYY'),
             'goal': this.model.goal,
             'deliverable': this.model.deliverable,
             'startTime': this.model.startTime,
@@ -84,7 +84,7 @@ readTextArea (deliverable, process) {
     } else {
         this.http.post('http://localhost:3000/tasks/add', {
             'name': this.model.name,
-            'date': this.model.date,
+            'date': moment(this.model.date).format('DD-MM-YYYY'),
             'goal': this.model.goal,
             'deliverable': this.model.deliverable,
             'startTime': this.model.startTime,

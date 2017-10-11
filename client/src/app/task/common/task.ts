@@ -4,7 +4,7 @@ export class Task {
         public name: string,
         public date: string,
         public goal: string,
-        public deliverable: string,
+        public deliverable: string[],
         public startTime: string,
         public endTime: string,
         public process: string[],
