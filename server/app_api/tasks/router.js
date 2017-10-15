@@ -80,6 +80,10 @@ function add(req, res) {
     // }
     task.process = req.body.process;
 
+    // Object.keys(task).forEach(function(key){
+    //     task[key] = htmlEscape(task[key]);
+    //   });
+
     task.save(function(err) {
         res.status(200);
         res.json({
@@ -107,6 +111,9 @@ function edit(req, res) {
     updateDoc.endTime = formattedTime;
 
     // updateDoc.userId = new ObjectID(updateDoc.userId);
+    // Object.keys(req.body).forEach(function(key){
+    //     req.body[key] = htmlEscape(req.body[key]);
+    //   });
 
     Task.updateOne({_id: id}, updateDoc, function(err, doc) {
       if (err) {
@@ -127,5 +134,23 @@ function remove(req, res) {
         }
     });
 }
+
+function htmlEscape(item) {
+    if(typeof item === 'string' || item instanceof String){
+        return item.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+    else if(item && typeof item === 'object' && item.constructor === Array){
+        item.forEach(function(element) {
+            element = htmlEscape(element);
+        }, this);
+    }
+    else {
+        return item;
+    }
+ }
 
 module.exports = router;

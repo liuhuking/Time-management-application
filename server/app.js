@@ -40,17 +40,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 
-app.use(expressJwt({
-  secret: config.secret,
-  getToken: function (req) {
-    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-      return req.headers.authorization.split(' ')[1];
-    } else if (req.query && req.query.token) {
-      return req.query.token;
-    }
-    return null;
-  }
-}).unless({ path: ['/users2/authenticate', '/users2/register'] }));
+// app.use(expressJwt({
+//   secret: config.secret,
+//   getToken: function (req) {
+//     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+//       return req.headers.authorization.split(' ')[1];
+//     } else if (req.query && req.query.token) {
+//       return req.query.token;
+//     }
+//     return null;
+//   }
+// }).unless({ path: ['/users2/authenticate', '/users2/register'] }));
 
 app.use('/', index);
 app.use('/users', routesApi);
