@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var cors = require('cors');
+var config = require('./config.json');
+var expressJwt = require('express-jwt');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -19,6 +21,7 @@ require('./app_api/projects/model');
 var routesApi = require('./app_api/users/router');
 var routesTaskApi = require('./app_api/tasks/router');
 var routesProjectApi = require('./app_api/projects/router');
+var users2 = require('./app_api/users2/router');
 
 var app = express();
 
@@ -37,10 +40,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 
+app.use(expressJwt({
+  secret: config.secret,
+  getToken: function (req) {
+    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+      return req.headers.authorization.split(' ')[1];
+    } else if (req.query && req.query.token) {
+      return req.query.token;
+    }
+    return null;
+  }
+}).unless({ path: ['/users2/authenticate', '/users2/register'] }));
+
 app.use('/', index);
 app.use('/users', routesApi);
 app.use('/tasks', routesTaskApi);
 app.use('/projects', routesProjectApi);
+app.use('/users2', users2);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

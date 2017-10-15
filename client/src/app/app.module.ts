@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { routing } from './app.routing';
+import { AuthGuard } from './auth/authguard/auth.guard';
+import { AdminAuthGuard } from './auth/authguard/admin.auth.guard';
 
 import { AppComponent } from './app.component';
 import { TaskComponent } from './task/task-list/task.component';
@@ -15,23 +15,11 @@ import { ProfileComponent } from './auth/profile/profile.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { ListComponent } from './project/list/list.component';
 import { FormComponent } from './project/form/form.component';
-
-const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'logout', component: LogoutComponent },
-  { path: '',
-    redirectTo: '/',
-    pathMatch: 'full'
-  },
-  { path: 'task', component: TaskComponent },
-  { path: 'task-form/:id', component: TaskFormComponent },
-  { path: '',
-    redirectTo: '/',
-    pathMatch: 'full'
-  }
-];
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { UserComponent } from './user/user.component';
+import { UserFormComponent } from './user-form/user-form.component';
+import { PasswordResetComponent } from './auth/password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -43,20 +31,22 @@ const appRoutes: Routes = [
     ProfileComponent,
     LogoutComponent,
     ListComponent,
-    FormComponent
+    FormComponent,
+    UserComponent,
+    UserFormComponent,
+    PasswordResetComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(
-      appRoutes,
-      // Debugging purposes only
-      { enableTracing: true }
-    )
+    routing
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    AdminAuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

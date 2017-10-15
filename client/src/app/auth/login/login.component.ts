@@ -13,21 +13,26 @@ export class LoginComponent implements OnInit {
 
   user: User;
   submitted = false;
+  message: String;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.user = new User("", "", "");
+    this.user = new User("", "", "", "");
+    this.message = "";
   }
 
   ngOnInit() {
+    if(sessionStorage){
+      this.router.navigate(['/task']);
+    }
   }
 
   onSubmit() {
     this.submitted = true;
-    this.http.post('http://localhost:3000/users/login', this.user).subscribe(data => {
+    this.http.post('http://localhost:3000/users2/authenticate', this.user).subscribe(data => {
       if (data['token']) {
-        localStorage.setItem('mean-token', data['token']);
+        sessionStorage.setItem('currentUser', JSON.stringify(data));
         location.reload();
-        this.router.navigate(['/']);
+        this.router.navigate(['/task']);
       }
     });
   }

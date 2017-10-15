@@ -11,10 +11,10 @@ export class LogoutComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    if(localStorage.getItem('mean-token')){
-      localStorage.clear();
+    if(sessionStorage){
+      sessionStorage.clear();
       location.reload();
+      this.router.navigate(['/login']);
     }
   }
-
 }
