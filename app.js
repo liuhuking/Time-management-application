@@ -6,22 +6,22 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var cors = require('cors');
-var config = require('./config.json');
+var config = require('./server/config.json');
 var expressJwt = require('express-jwt');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+var index = require('./server/routes/index');
+var users = require('./server/routes/users');
 
-require('./config');
-require('./app_api/users/model');
-require('./app_api/users/passport');
-require('./app_api/tasks/model');
-require('./app_api/projects/model');
+require('./server/config');
+require('./server/app_api/users/model');
+require('./server/app_api/users/passport');
+require('./server/app_api/tasks/model');
+require('./server/app_api/projects/model');
 
-var routesApi = require('./app_api/users/router');
-var routesTaskApi = require('./app_api/tasks/router');
-var routesProjectApi = require('./app_api/projects/router');
-var users2 = require('./app_api/users2/router');
+var routesApi = require('./server/app_api/users/router');
+var routesTaskApi = require('./server/app_api/tasks/router');
+var routesProjectApi = require('./server/app_api/projects/router');
+var users2 = require('./server/app_api/users2/router');
 
 var app = express();
 
@@ -65,7 +65,7 @@ app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
-});
+})-
 
 // error handler
 app.use(function(err, req, res, next) {
